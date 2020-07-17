@@ -19,9 +19,9 @@ socket.on("color", (c: number[]) => {
     updateDisplays();
 });
 
-$('html').click(() => {
+document.onclick = () => {
     socket.emit("click")
-}); 
+}; 
 
 function updateDisplays() {
     document.getElementById("clicks").innerHTML = clicks.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

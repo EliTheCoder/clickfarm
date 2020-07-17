@@ -42,9 +42,9 @@ process.on("exit", () => saveData(clicks, color));
 
 io.on("connection", (socket: socketio.Socket) => {
 
-    const addr = socket.handshake.address.address;
+    const addr = socket.handshake.address.split(":")[3];
 
-    console.log(`Connection: ${JSON.stringify(socket.handshake)}`)
+    console.log(`Connection: ${addr}`)
 
     console.log(`Test 1: ${socketAddresses[addr]}`);
     if (socketAddresses[addr] === undefined) socketAddresses[addr] = 1;

@@ -2,6 +2,7 @@ import express = require("express");
 import http = require("http");
 import path = require("path");
 import fs = require("fs");
+import _ = require("lodash");
 const pm2io = require("@pm2/io")
 require("better-logging")(console);
 
@@ -14,6 +15,8 @@ app.use(express.static(path.join(__dirname, "client")))
 
 let clicks = 0;
 let color = randomColor();
+
+let cooldown = {};
 
 if (fs.existsSync("./data.json")) {
     const data = JSON.parse(fs.readFileSync("./data.json", "utf8"));
@@ -41,6 +44,9 @@ io.on("connection", (socket) => {
     socket.emit("clicks", clicks);
 
     socket.on("click", () => {
+        if (cooldown[socket.id] === undefined) cooldown[socket.id] = false;
+        if (cooldown[socket.id] === true) return;
+        cooldown[socket.id] = true;
         clicks++;
         color = randomColor();
         clicksmetric.set(clicks);
@@ -50,6 +56,10 @@ io.on("connection", (socket) => {
 
 });
 
+setInterval(() => {
+    cooldown = _.mapValues(cooldown, () => false);
+}, 100)
+
 server.listen(8080, () => {
     console.info("Server listening on port 8080");
 });
@@ -57,8 +67,8 @@ server.listen(8080, () => {
 pm2io.init({
     transactions: true,
     http: true
-})
+});
 
 const clicksmetric = pm2io.metric({
     name: "Clicks"
-})
+});

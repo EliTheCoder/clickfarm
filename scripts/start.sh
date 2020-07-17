@@ -1,2 +1,6 @@
+rm -rf dist
 tsc
-pm2 start dist/index.js
+cd src
+copyfiles **/*.html **/*.css ../dist/
+cd ..
+node dist/index.js

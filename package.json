@@ -17,7 +17,17 @@
   },
   "homepage": "https://github.com/EliTheCoder/clickfarm#readme",
   "dependencies": {
+    "@types/jquery": "^3.5.0",
+    "@types/socket.io-client": "^1.4.33",
+    "better-logging": "^4.4.0",
+    "copyfiles": "^2.3.0",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "http": "0.0.1-security",
+    "path": "^0.12.7",
     "pm2": "^4.4.0",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0",
     "typescript": "^3.9.7"
   }
 }

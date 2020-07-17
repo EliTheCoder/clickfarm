@@ -2,6 +2,7 @@ import express = require("express");
 import http = require("http");
 import path = require("path");
 import fs = require("fs");
+import socketio = require("socket.io");
 import _ = require("lodash");
 const pm2io = require("@pm2/io")
 require("better-logging")(console);
@@ -9,7 +10,7 @@ require("better-logging")(console);
 const app = express();
 const server = http.createServer(app);
 
-const io = require("socket.io")(server);
+const io = socketio(server);
 
 app.use(express.static(path.join(__dirname, "client")))
 
@@ -17,6 +18,7 @@ let clicks = 0;
 let color = randomColor();
 
 let cooldown = {};
+let socketAddresses = {};
 
 if (fs.existsSync("./data.json")) {
     const data = JSON.parse(fs.readFileSync("./data.json", "utf8"));
@@ -38,7 +40,15 @@ function saveData(cli, col) {
 
 process.on("exit", () => saveData(clicks, color));
 
-io.on("connection", (socket) => {
+io.on("connection", (socket: socketio.Socket) => {
+
+    const addr = socket.handshake.address.address;
+
+    if (socketAddresses[addr] === undefined) socketAddresses[addr] = 1;
+    if (socketAddresses[addr] >= 3) {
+        socket.disconnect();
+    }
+    socketAddresses[addr]++;
 
     socket.emit("color", color);
     socket.emit("clicks", clicks);
@@ -55,6 +65,13 @@ io.on("connection", (socket) => {
     });
 
 });
+
+io.on("disconnect", (socket: socketio.Socket) => {
+    const addr = socket.handshake.address.address;
+
+    if (socketAddresses[addr] !== undefined) socketAddresses[addr]--;
+    
+})
 
 setInterval(() => {
     cooldown = _.mapValues(cooldown, () => false);

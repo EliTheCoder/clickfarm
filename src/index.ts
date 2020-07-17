@@ -44,7 +44,7 @@ io.on("connection", (socket: socketio.Socket) => {
 
     const addr = socket.handshake.address.address;
 
-    console.log(`Connection: ${addr}`)
+    console.log(`Connection: ${JSON.stringify(socket.handshake)}`)
 
     console.log(`Test 1: ${socketAddresses[addr]}`);
     if (socketAddresses[addr] === undefined) socketAddresses[addr] = 1;

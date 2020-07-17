@@ -56,6 +56,10 @@ io.on("connection", (socket: socketio.Socket) => {
     socketAddresses[addr]++;
     console.log(`Test 4: ${socketAddresses[addr]}`);
 
+    socket.on("disconnect", () => {
+        if (socketAddresses[addr] !== undefined) socketAddresses[addr]--;
+    });
+
     socket.emit("color", color);
     socket.emit("clicks", clicks);
 
@@ -75,7 +79,7 @@ io.on("connection", (socket: socketio.Socket) => {
 io.on("disconnect", (socket: socketio.Socket) => {
     const addr = socket.handshake.address.address;
 
-    if (socketAddresses[addr] !== undefined) socketAddresses[addr]--;
+    
 
 })
 

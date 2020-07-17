@@ -44,11 +44,17 @@ io.on("connection", (socket: socketio.Socket) => {
 
     const addr = socket.handshake.address.address;
 
+    console.log(`Connection: ${addr}`)
+
+    console.log(`Test 1: ${socketAddresses[addr]}`);
     if (socketAddresses[addr] === undefined) socketAddresses[addr] = 1;
+    console.log(`Test 2: ${socketAddresses[addr]}`);
     if (socketAddresses[addr] >= 3) {
         socket.disconnect();
     }
+    console.log(`Test 3: ${socketAddresses[addr]}`);
     socketAddresses[addr]++;
+    console.log(`Test 4: ${socketAddresses[addr]}`);
 
     socket.emit("color", color);
     socket.emit("clicks", clicks);
@@ -70,7 +76,7 @@ io.on("disconnect", (socket: socketio.Socket) => {
     const addr = socket.handshake.address.address;
 
     if (socketAddresses[addr] !== undefined) socketAddresses[addr]--;
-    
+
 })
 
 setInterval(() => {

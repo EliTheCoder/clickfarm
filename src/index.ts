@@ -63,6 +63,7 @@ setInterval(() => {
 setInterval(() => saveData(clicks,color), 2000);
 
 setInterval(() => io.emit("clicks", clicks), 500);
+setInterval(() => io.emit("color", color), 2100);
 
 server.listen(8080, () => {
     console.info("Server listening on port 8080");

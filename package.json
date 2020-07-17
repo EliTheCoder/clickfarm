@@ -1,0 +1,23 @@
+{
+  "name": "clickfarm",
+  "version": "1.0.0",
+  "description": "I don't know what this is",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "sh scripts/start.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EliTheCoder/clickfarm.git"
+  },
+  "author": "EliTheCoder",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/EliTheCoder/clickfarm/issues"
+  },
+  "homepage": "https://github.com/EliTheCoder/clickfarm#readme",
+  "dependencies": {
+    "pm2": "^4.4.0",
+    "typescript": "^3.9.7"
+  }
+}

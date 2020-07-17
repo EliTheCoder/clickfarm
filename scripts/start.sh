@@ -3,4 +3,4 @@ tsc
 cd src
 copyfiles **/*.html **/*.css ../dist/
 cd ..
-pm2 start dist/index.js --name "clickfarm"
+sudo pm2 start dist/index.js --name "clickfarm"

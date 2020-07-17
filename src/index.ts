@@ -50,8 +50,8 @@ io.on("connection", (socket) => {
 
 });
 
-server.listen(80, () => {
-    console.info("Server listening on port 80");
+server.listen(8080, () => {
+    console.info("Server listening on port 8080");
 });
 
 pm2io.init({

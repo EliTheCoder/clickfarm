@@ -2,6 +2,7 @@ import express = require("express");
 import http = require("http");
 import path = require("path");
 import fs = require("fs");
+const pm2io = require("@pm2/io")
 require("better-logging")(console);
 
 const app = express();
@@ -42,13 +43,22 @@ io.on("connection", (socket) => {
     socket.on("click", () => {
         clicks++;
         color = randomColor();
+        clicksmetric.set(clicks);
         io.emit("click", clicks, color);
-        saveData(clicks,color);
+        saveData(clicks, color);
     });
 
 });
 
-server.listen(8000, () => {
-    console.info('Server listening on port 80');
+server.listen(80, () => {
+    console.info("Server listening on port 80");
 });
 
+pm2io.init({
+    transactions: true,
+    http: true
+})
+
+const clicksmetric = pm2io.metric({
+    name: "Clicks"
+})

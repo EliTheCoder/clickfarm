@@ -50,7 +50,8 @@ io.on("connection", (socket) => {
         clicks++;
         color = randomColor();
         clicksmetric.set(clicks);
-        io.emit("click", clicks, color);
+        socket.emit("color", color);
+        socket.broadcast.emit("click", clicks, color);
     });
 
 });
@@ -59,7 +60,9 @@ setInterval(() => {
     cooldown = _.mapValues(cooldown, () => false);
 }, 100)
 
-setInterval(() => saveData(clicks,color), 1000);
+setInterval(() => saveData(clicks,color), 2000);
+
+setInterval(() => io.emit("clicks", clicks), 500);
 
 server.listen(8080, () => {
     console.info("Server listening on port 8080");

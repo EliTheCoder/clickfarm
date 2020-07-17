@@ -57,6 +57,7 @@ io.on("connection", (socket: socketio.Socket) => {
     console.log(`Test 4: ${socketAddresses[addr]}`);
 
     socket.on("disconnect", () => {
+        console.log(`Disconnection: ${addr}`)
         if (socketAddresses[addr] !== undefined) socketAddresses[addr]--;
     });
 
@@ -75,13 +76,6 @@ io.on("connection", (socket: socketio.Socket) => {
     });
 
 });
-
-io.on("disconnect", (socket: socketio.Socket) => {
-    const addr = socket.handshake.address.address;
-
-    
-
-})
 
 setInterval(() => {
     cooldown = _.mapValues(cooldown, () => false);

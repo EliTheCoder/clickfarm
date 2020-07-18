@@ -59,7 +59,7 @@ io.on("connection", (socket: socketio.Socket) => {
 
 setInterval(() => {
     cooldown = [];
-}, 120)
+}, 60)
 
 setInterval(() => saveData(clicks,color), 2000);
 

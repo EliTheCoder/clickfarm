@@ -17,7 +17,7 @@ app.use(express.static(path.join(__dirname, "client")))
 let clicks = 0;
 let color = randomColor();
 
-let cooldown = {};
+let cooldown = [];
 
 if (fs.existsSync("./data.json")) {
     const data = JSON.parse(fs.readFileSync("./data.json", "utf8"));
@@ -45,9 +45,8 @@ io.on("connection", (socket: socketio.Socket) => {
     socket.emit("clicks", clicks);
 
     socket.on("click", () => {
-        if (cooldown[socket.id] === undefined) cooldown[socket.id] = false;
-        if (cooldown[socket.id] === true) return;
-        cooldown[socket.id] = true;
+        if (cooldown.includes(socket.id)) return;
+        cooldown.push(socket.id);
         clicks++;
         color = randomColor();
         clicksmetric.set(clicks);
@@ -58,8 +57,8 @@ io.on("connection", (socket: socketio.Socket) => {
 });
 
 setInterval(() => {
-    cooldown = _.mapValues(cooldown, () => false);
-}, 100)
+    cooldown = [];
+}, 120)
 
 setInterval(() => saveData(clicks,color), 2000);
 

@@ -18,7 +18,6 @@ let clicks = 0;
 let color = randomColor();
 
 let cooldown = {};
-let socketAddresses = {};
 
 if (fs.existsSync("./data.json")) {
     const data = JSON.parse(fs.readFileSync("./data.json", "utf8"));
@@ -41,25 +40,6 @@ function saveData(cli, col) {
 process.on("exit", () => saveData(clicks, color));
 
 io.on("connection", (socket: socketio.Socket) => {
-
-    socket.on("disconnect", () => {
-        console.log(`Disconnection: ${addr}`)
-        if (socketAddresses[addr] !== undefined) socketAddresses[addr]--;
-    });
-
-    const addr = socket.handshake.address.split(":")[3];
-
-    console.log(`Connection: ${addr}`)
-
-    console.log(`Test 1: ${socketAddresses[addr]}`);
-    if (socketAddresses[addr] === undefined) socketAddresses[addr] = 1;
-    console.log(`Test 2: ${socketAddresses[addr]}`);
-    if (socketAddresses[addr] >= 3) {
-        socket.disconnect();
-    }
-    console.log(`Test 3: ${socketAddresses[addr]}`);
-    socketAddresses[addr]++;
-    console.log(`Test 4: ${socketAddresses[addr]}`);
 
     socket.emit("color", color);
     socket.emit("clicks", clicks);

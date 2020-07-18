@@ -41,12 +41,14 @@ process.on("exit", () => saveData(clicks, color));
 
 io.on("connection", (socket: socketio.Socket) => {
 
+    const addr = socket.handshake.address.split(":")[3];
+
     socket.emit("color", color);
     socket.emit("clicks", clicks);
 
     socket.on("click", () => {
-        if (cooldown.includes(socket.id)) return;
-        cooldown.push(socket.id);
+        if (cooldown.includes(addr)) return;
+        cooldown.push(addr);
         clicks++;
         color = randomColor();
         clicksmetric.set(clicks);

@@ -20,8 +20,6 @@ socket.on("color", (c: number[]) => {
 });
 
 document.onclick = () => {
-    clicks++;
-    updateDisplays();
     socket.emit("click");
 }; 
 

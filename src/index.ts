@@ -50,8 +50,7 @@ io.on("connection", (socket: socketio.Socket) => {
         clicks++;
         color = randomColor();
         clicksmetric.set(clicks);
-        socket.emit("color", color);
-        socket.broadcast.emit("click", clicks, color);
+        io.emit("click", clicks, color);
     });
 
 });

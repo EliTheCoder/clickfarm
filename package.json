@@ -4,7 +4,8 @@
   "description": "I don't know what this is",
   "main": "dist/index.js",
   "scripts": {
-    "start": "sh scripts/start.sh"
+    "start": "sh scripts/start.sh",
+    "deploy": "sh script/deploy.sh"
   },
   "repository": {
     "type": "git",

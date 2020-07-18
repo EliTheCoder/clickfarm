@@ -1,4 +1,5 @@
 rm -rf dist
+npm i
 tsc
 cd src
 copyfiles **/*.html **/*.css ../dist/

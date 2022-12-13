@@ -25,7 +25,7 @@
     "@types/socket.io-client": "^1.4.33",
     "better-logging": "^4.4.0",
     "copyfiles": "^2.3.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "fs": "0.0.1-security",
     "http": "0.0.1-security",
     "lodash": "^4.17.19",
